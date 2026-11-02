@@ -24,7 +24,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: TP1-linux
-          path: build/TP1
+          path: |
+            build/TP1
+            build/assets
           retention-days: 10
 
   windows:
@@ -60,4 +62,5 @@ jobs:
           path: |
             build/Release/TP1.exe
             build/Release/*.dll
+            build/Release/assets
           retention-days: 10
