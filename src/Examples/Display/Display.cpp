@@ -51,7 +51,7 @@ namespace
     }
 
     /**
-     * @brief Donne à chaque nœud un rang en ordre infixe et note la profondeur de l'arbre.
+     * @brief Donne à chaque noeud un rang en ordre infixe et note la profondeur de l'arbre.
      * @param node Sous-arbre à indexer. Rien n'est fait pour un noeud nul.
      * @param depth Profondeur de ce noeud. La racine vaut zéro.
      * @param rank Prochain emplacement horizontal libre. Il augmente à chaque noeud visité.
@@ -72,7 +72,7 @@ namespace
     }
 
     /**
-     * @brief Dessine les traits qui relient un nœud à ses fils.
+     * @brief Dessine les traits qui relient un noeud à ses fils.
      * @param target Surface qui reçoit les traits.
      * @param node Sous-arbre dont les liens sont dessinés.
      */
@@ -104,11 +104,11 @@ namespace
     }
 
     /**
-     * @brief Dessine chaque nœud comme un cercle. Le nœud actif est rempli en bleu.
+     * @brief Dessine chaque noeud comme un cercle. Le noeud actif est rempli en bleu.
      * @param target Surface qui reçoit les cercles.
      * @param font Police des valeurs.
      * @param node Sous-arbre à dessiner.
-     * @param active Nœud mis en évidence pour l'étape courante. Peut être nul.
+     * @param active Noeud mis en évidence pour l'étape courante. Peut être nul.
      */
     void drawNodes(sf::RenderTarget &target, const sf::Font &font, const TreeNode *node,
         const TreeNode *active, const std::map<const TreeNode *, std::pair<int, int>> &info,
@@ -285,12 +285,12 @@ auto drawPanel(sf::RenderTarget &target, sf::FloatRect area, const sf::Font &fon
 }
 
 /**
- * @brief Dispose l'arbre en ordre et dessine ses liens et ses nœuds.
+ * @brief Dispose l'arbre en ordre et dessine ses liens et ses noeuds.
  * @param target Surface qui reçoit l'arbre.
- * @param font Police des valeurs des nœuds.
+ * @param font Police des valeurs des noeuds.
  * @param area Zone libre à l'intérieur de la carte.
  * @param root Racine de l'arbre. Un arbre vide affiche un court message.
- * @param active Nœud mis en évidence pour l'étape courante. Peut être nul.
+ * @param active Noeud mis en évidence pour l'étape courante. Peut être nul.
  */
 void drawTree(sf::RenderTarget &target, const sf::Font &font, sf::FloatRect area,
     const TreeNode *root, const TreeNode *active)
@@ -300,7 +300,7 @@ void drawTree(sf::RenderTarget &target, const sf::Font &font, sf::FloatRect area
     }
 
     if (root == nullptr) {
-        sf::Text empty(utf8("Aucun nœud"), font, 18);
+        sf::Text empty(utf8("Aucun noeud"), font, 18);
         empty.setFillColor(sf::Color(140, 148, 162));
         placeText(empty, area.left + (area.width / 2.F), area.top + (area.height / 2.F), true);
         target.draw(empty);

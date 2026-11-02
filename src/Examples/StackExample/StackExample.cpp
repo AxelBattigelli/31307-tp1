@@ -54,7 +54,7 @@ namespace
 
 /**
  * @brief Construit l'exemple de pile avec la police de l'application.
- * @param font Police du panneau et des nœuds.
+ * @param font Police du panneau et des noeuds.
  */
 StackExample::StackExample(const sf::Font &font) : Example(font) {}
 
@@ -96,7 +96,7 @@ void StackExample::applyStep()
 }
 
 /**
- * @brief Dessine la pile avec le nœud du sommet au-dessus des autres.
+ * @brief Dessine la pile avec le noeud du sommet au-dessus des autres.
  * @param target Surface qui reçoit l'exemple.
  * @param area Partie gauche de la fenêtre.
  */

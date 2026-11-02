@@ -28,7 +28,7 @@ namespace
 
 /**
  * @brief Construit l'exemple de construction d'arbre avec la police de l'application.
- * @param font Police du panneau et des nœuds.
+ * @param font Police du panneau et des noeuds.
  */
 TreeBuild::TreeBuild(const sf::Font &font) : Example(font) {}
 
@@ -155,7 +155,7 @@ void TreeBuild::applyStep()
 }
 
 /**
- * @brief Dessine l'arbre construit jusqu'ici et met en évidence le nœud courant.
+ * @brief Dessine l'arbre construit jusqu'ici et met en évidence le noeud courant.
  * @param target Surface qui reçoit l'exemple.
  * @param area Partie gauche de la fenêtre.
  */

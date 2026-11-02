@@ -60,7 +60,7 @@ namespace
 
 /**
  * @brief Construit l'exemple de file avec la police de l'application.
- * @param font Police du panneau et des nœuds.
+ * @param font Police du panneau et des noeuds.
  */
 QueueExample::QueueExample(const sf::Font &font) : Example(font) {}
 
@@ -117,7 +117,7 @@ void QueueExample::draw(sf::RenderTarget &target, sf::FloatRect area) const
     const float centerY = drawn.diagram.top + (drawn.diagram.height / 2.F);
 
     if (values.empty()) {
-        sf::Text empty(utf8("Aucun nœud"), font(), 18);
+        sf::Text empty(utf8("Aucun noeud"), font(), 18);
         empty.setFillColor(sf::Color(140, 148, 162));
         placeText(empty, drawn.diagram.left + (drawn.diagram.width / 2.F), centerY, true);
         target.draw(empty);

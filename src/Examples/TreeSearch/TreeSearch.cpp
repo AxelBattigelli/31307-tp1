@@ -29,7 +29,7 @@ namespace
 
 /**
  * @brief Construit l'exemple de recherche avec la police de l'application.
- * @param font Police du panneau et des nœuds.
+ * @param font Police du panneau et des noeuds.
  */
 TreeSearch::TreeSearch(const sf::Font &font) : Example(font) {}
 
@@ -107,7 +107,7 @@ void TreeSearch::record(int target)
 }
 
 /**
- * @brief Met en évidence le nœud comparé pendant l'étape de recherche courante.
+ * @brief Met en évidence le noeud comparé pendant l'étape de recherche courante.
  */
 void TreeSearch::applyStep()
 {
@@ -117,7 +117,7 @@ void TreeSearch::applyStep()
 }
 
 /**
- * @brief Dessine l'arbre complet et le nœud de la comparaison courante.
+ * @brief Dessine l'arbre complet et le noeud de la comparaison courante.
  * @param target Surface qui reçoit l'exemple.
  * @param area Partie gauche de la fenêtre.
  */

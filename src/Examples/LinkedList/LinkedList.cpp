@@ -19,7 +19,7 @@
 
 /**
  * @brief Insère une valeur en fin de liste.
- * @param value Valeur stockée dans le nouveau nœud.
+ * @param value Valeur stockée dans le nouveau noeud.
  */
 void LinkedList::enqueue(int value)
 {
@@ -29,7 +29,7 @@ void LinkedList::enqueue(int value)
         return;
     }
 
-    // Pointeur brut : parcourt jusqu'au dernier nœud sans en prendre possession.
+    // Pointeur brut : parcourt jusqu'au dernier noeud sans en prendre possession.
     ListNode *current = _head.get();
     while (current->next) {
         current = current->next.get();
@@ -38,8 +38,8 @@ void LinkedList::enqueue(int value)
 }
 
 /**
- * @brief Insère une valeur en tête. Le nouveau nœud devient la tête.
- * @param value Valeur stockée dans le nouveau nœud.
+ * @brief Insère une valeur en tête. Le nouveau noeud devient la tête.
+ * @param value Valeur stockée dans le nouveau noeud.
  */
 void LinkedList::push(int value)
 {
@@ -50,7 +50,7 @@ void LinkedList::push(int value)
 }
 
 /**
- * @brief Retire le nœud de tête et laisse le suivant devenir la tête.
+ * @brief Retire le noeud de tête et laisse le suivant devenir la tête.
  * @return Faux si la liste est déjà vide.
  */
 auto LinkedList::dequeue() -> bool
@@ -59,13 +59,13 @@ auto LinkedList::dequeue() -> bool
         return false;
     }
 
-    // La tête prend le nœud suivant. L'ancienne tête est détruite.
+    // La tête prend le noeud suivant. L'ancienne tête est détruite.
     _head = std::move(_head->next);
     return true;
 }
 
 /**
- * @brief Retire le nœud de tête. Même opération que dequeue().
+ * @brief Retire le noeud de tête. Même opération que dequeue().
  * @return Faux si la liste est déjà vide.
  */
 auto LinkedList::pop() -> bool
@@ -74,7 +74,7 @@ auto LinkedList::pop() -> bool
 }
 
 /**
- * @brief Détruit chaque nœud, en partant de la tête.
+ * @brief Détruit chaque noeud, en partant de la tête.
  */
 void LinkedList::clear()
 {
@@ -82,7 +82,7 @@ void LinkedList::clear()
 }
 
 /**
- * @brief Indique si la liste n'a aucun nœud.
+ * @brief Indique si la liste n'a aucun noeud.
  * @return Vrai s'il n'y a pas de tête.
  */
 auto LinkedList::empty() const -> bool
@@ -91,8 +91,8 @@ auto LinkedList::empty() const -> bool
 }
 
 /**
- * @brief Compte les nœuds de la tête jusqu'à la fin.
- * @return Le nombre de nœuds.
+ * @brief Compte les noeuds de la tête jusqu'à la fin.
+ * @return Le nombre de noeuds.
  */
 auto LinkedList::size() const -> std::size_t
 {

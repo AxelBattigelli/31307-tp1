@@ -50,7 +50,7 @@ auto BinaryTree::root() const -> const TreeNode *
 }
 
 /**
- * @brief Crée le nœud racine.
+ * @brief Crée le noeud racine.
  * @param value Valeur stockée dans la racine.
  */
 void BinaryTree::addRoot(int value)
@@ -60,10 +60,10 @@ void BinaryTree::addRoot(int value)
 
 /**
  * @brief Attache un nouveau fils à un parent. Le parent possède ce fils.
- * @param parent Nœud qui reçoit le fils.
+ * @param parent Noeud qui reçoit le fils.
  * @param left Vrai pour le fils gauche, faux pour le fils droit.
- * @param value Valeur stockée dans le nouveau nœud.
- * @return Le nœud qui vient d'être créé.
+ * @param value Valeur stockée dans le nouveau noeud.
+ * @return Le noeud qui vient d'être créé.
  */
 auto BinaryTree::addChild(TreeNode &parent, bool left, int value) -> TreeNode *
 {
@@ -83,7 +83,7 @@ void BinaryTree::insert(int value)
         return;
     }
 
-    // Parcours avec un pointeur brut. Seul le parent possède le nouveau nœud.
+    // Parcours avec un pointeur brut. Seul le parent possède le nouveau noeud.
     TreeNode *current = _root.get();
     while (true) {
         if (value < current->_value) {
