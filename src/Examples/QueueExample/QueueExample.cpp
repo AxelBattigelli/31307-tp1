@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Queue example, auto and manual modes
+** Exemple de file, modes auto et manuel
 */
 
 #include "Examples/QueueExample/QueueExample.hpp"
@@ -23,7 +23,7 @@
 
 /**
  * @file QueueExample.cpp
- * @brief Customers join the back of a linked list and leave from the front.
+ * @brief Des clients rejoignent la fin d'une liste chaînée et partent par le début.
  */
 
 namespace
@@ -36,14 +36,22 @@ namespace
     };
 
     constexpr Step kSteps[] = {
-        {.insert = true, .value = 4, .message = "Customer 4 joins the back of the queue."},
-        {.insert = true, .value = 9, .message = "Customer 9 joins the back of the queue."},
-        {.insert = true, .value = 2, .message = "Customer 2 joins the back of the queue."},
-        {.insert = false, .value = 0, .message = "Customer 4 is served: the front leaves."},
-        {.insert = true, .value = 7, .message = "Customer 7 joins the back of the queue."},
-        {.insert = false, .value = 0, .message = "Customer 9 is served: the front leaves."},
-        {.insert = false, .value = 0, .message = "Customer 2 is served: the front leaves."},
-        {.insert = false, .value = 0, .message = "Customer 7 is served: the front leaves."},
+        {.insert = true, .value = 4, .message = "Le client 4 rejoint la fin de la file."},
+        {.insert = true, .value = 9, .message = "Le client 9 rejoint la fin de la file."},
+        {.insert = true, .value = 2, .message = "Le client 2 rejoint la fin de la file."},
+        {.insert = false,
+            .value = 0,
+            .message = "Le client 4 est servi : la tête quitte la file."},
+        {.insert = true, .value = 7, .message = "Le client 7 rejoint la fin de la file."},
+        {.insert = false,
+            .value = 0,
+            .message = "Le client 9 est servi : la tête quitte la file."},
+        {.insert = false,
+            .value = 0,
+            .message = "Le client 2 est servi : la tête quitte la file."},
+        {.insert = false,
+            .value = 0,
+            .message = "Le client 7 est servi : la tête quitte la file."},
     };
 
     constexpr std::size_t kStepCount = sizeof(kSteps) / sizeof(kSteps[0]);
@@ -51,34 +59,34 @@ namespace
 } // namespace
 
 /**
- * @brief Builds the queue example with the application font.
- * @param font Font used for the panel and the nodes.
+ * @brief Construit l'exemple de file avec la police de l'application.
+ * @param font Police du panneau et des nœuds.
  */
 QueueExample::QueueExample(const sf::Font &font) : Example(font) {}
 
 /**
- * @brief Returns the name shown in the menu.
- * @return The menu label of this example.
+ * @brief Renvoie le nom affiché dans le menu.
+ * @return Le libellé de menu de cet exemple.
  */
 auto QueueExample::name() const -> const char *
 {
-    return "Queue";
+    return "File";
 }
 
 /**
- * @brief Clears the queue and arms the scenario.
- * @param mode Auto or Manual.
+ * @brief Vide la file et arme le scénario.
+ * @param mode Auto ou Manuel.
  */
 void QueueExample::start(Mode mode)
 {
     _list.clear();
     _focus = -1;
-    _message = "The queue is empty.";
+    _message = "La file est vide.";
     prepare(mode, kStepCount);
 }
 
 /**
- * @brief Enqueues or dequeues the customer of the current step.
+ * @brief Enfile ou défile le client de l'étape courante.
  */
 void QueueExample::applyStep()
 {
@@ -94,13 +102,13 @@ void QueueExample::applyStep()
 }
 
 /**
- * @brief Draws the queue from the front to the back.
- * @param target Surface that receives the example.
- * @param area Left part of the window.
+ * @brief Dessine la file de la tête vers la queue.
+ * @param target Surface qui reçoit l'exemple.
+ * @param area Partie gauche de la fenêtre.
  */
 void QueueExample::draw(sf::RenderTarget &target, sf::FloatRect area) const
 {
-    const DrawArea drawn = drawPanel(target, area, font(), "Queue", stepLabel(), _message, hint());
+    const DrawArea drawn = drawPanel(target, area, font(), "File", stepLabel(), _message, hint());
     if (drawn.diagram.width < 40.F || drawn.diagram.height < 30.F) {
         return;
     }
@@ -109,7 +117,7 @@ void QueueExample::draw(sf::RenderTarget &target, sf::FloatRect area) const
     const float centerY = drawn.diagram.top + (drawn.diagram.height / 2.F);
 
     if (values.empty()) {
-        sf::Text empty("No node", font(), 18);
+        sf::Text empty(utf8("Aucun nœud"), font(), 18);
         empty.setFillColor(sf::Color(140, 148, 162));
         placeText(empty, drawn.diagram.left + (drawn.diagram.width / 2.F), centerY, true);
         target.draw(empty);
@@ -139,22 +147,22 @@ void QueueExample::draw(sf::RenderTarget &target, sf::FloatRect area) const
         box.setOutlineColor(active ? sf::Color(70, 128, 196) : sf::Color(180, 188, 202));
         target.draw(box);
 
-        sf::Text value(std::to_string(values[i]), font(), 22);
+        sf::Text value(utf8(std::to_string(values[i])), font(), 22);
         value.setFillColor(active ? sf::Color::White : sf::Color(28, 34, 46));
         placeText(value, x + (width / 2.F), centerY, true);
         target.draw(value);
 
         std::string role;
         if (count == 1) {
-            role = "front / back";
+            role = "tête / queue";
         } else if (i == 0) {
-            role = "front";
+            role = "tête";
         } else if (i + 1 == count) {
-            role = "back";
+            role = "queue";
         }
 
         if (!role.empty()) {
-            sf::Text label(role, font(), 14);
+            sf::Text label(utf8(role), font(), 14);
             label.setFillColor(sf::Color(96, 108, 128));
             placeText(label, x + (width / 2.F), centerY + (height / 2.F) + 18.F, true);
             target.draw(label);

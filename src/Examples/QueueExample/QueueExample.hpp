@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Queue example declaration
+** Déclaration de l'exemple de file
 */
 
 #pragma once
@@ -25,5 +25,5 @@ class QueueExample : public Example {
 
     LinkedList _list;
     int _focus = -1;
-    std::string _message = "Pick Auto or Manual in the menu.";
+    std::string _message = "Choisissez Auto ou Manuel dans le menu.";
 };

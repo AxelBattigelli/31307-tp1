@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Tree search example declaration
+** Déclaration de l'exemple de recherche dans un arbre
 */
 
 #pragma once
@@ -33,5 +33,5 @@ class TreeSearch : public Example {
     std::vector<Step> _steps;
     BinaryTree _tree;
     const TreeNode *_active = nullptr;
-    std::string _message = "Pick Auto or Manual in the menu.";
+    std::string _message = "Choisissez Auto ou Manuel dans le menu.";
 };

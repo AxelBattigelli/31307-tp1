@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Menu class implementation
+** Implémentation de la classe Menu
 */
 
 #include "Menu/Menu/Menu.hpp"
@@ -24,13 +24,13 @@
 
 /**
  * @file Menu.cpp
- * @brief Right-hand menu that fills one third of the window.
+ * @brief Menu à droite, qui occupe un tiers de la fenêtre.
  */
 
 /**
- * @brief Builds an empty menu that creates its rows through a factory.
- * @param factory Builds each row. The menu takes ownership of it.
- * @param font Font shared by the whole application. It must outlive the menu.
+ * @brief Construit un menu vide dont les lignes passent par une fabrique.
+ * @param factory Construit chaque ligne. Le menu en prend possession.
+ * @param font Police partagée par toute l'application. Elle doit survivre au menu.
  */
 Menu::Menu(std::unique_ptr<MenuItemFactory> factory, sf::Font &font)
     : _factory(std::move(factory)), _font(font)
@@ -43,13 +43,13 @@ Menu::Menu(std::unique_ptr<MenuItemFactory> factory, sf::Font &font)
 }
 
 /**
- * @brief Destroys the menu and the rows it owns.
+ * @brief Détruit le menu et les lignes qu'il possède.
  */
 Menu::~Menu() = default;
 
 /**
- * @brief Appends a row built by the factory.
- * @param name Label shown on the left of the row.
+ * @brief Ajoute une ligne construite par la fabrique.
+ * @param name Libellé affiché à gauche de la ligne.
  */
 void Menu::add(const std::string &name)
 {
@@ -62,8 +62,8 @@ void Menu::add(const std::string &name)
 }
 
 /**
- * @brief Stores the callback fired when a mode button is pressed.
- * @param action Receives the row name and the chosen mode.
+ * @brief Mémorise le rappel déclenché quand un bouton de mode est pressé.
+ * @param action Reçoit le nom de la ligne et le mode choisi.
  */
 void Menu::setAction(Action action)
 {
@@ -71,9 +71,9 @@ void Menu::setAction(Action action)
 }
 
 /**
- * @brief Keeps the menu on the right third after a resize.
- * @param windowWidth New window width, in pixels.
- * @param windowHeight New window height, in pixels.
+ * @brief Garde le menu sur le tiers droit après un redimensionnement.
+ * @param windowWidth Nouvelle largeur de la fenêtre, en pixels.
+ * @param windowHeight Nouvelle hauteur de la fenêtre, en pixels.
  */
 void Menu::resize(float windowWidth, float windowHeight)
 {
@@ -87,9 +87,9 @@ void Menu::resize(float windowWidth, float windowHeight)
 }
 
 /**
- * @brief Updates hover and starts the action of the clicked mode button.
- * @param event Event taken from the window.
- * @param window Window used to convert the mouse position.
+ * @brief Met à jour le survol et lance l'action du bouton de mode cliqué.
+ * @param event Événement pris dans la fenêtre.
+ * @param window Fenêtre utilisée pour convertir la position de la souris.
  */
 void Menu::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
 {
@@ -121,8 +121,8 @@ void Menu::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
 }
 
 /**
- * @brief Draws the panel, the title and every row.
- * @param target Window or texture that receives the menu.
+ * @brief Dessine le panneau, le titre et chaque ligne.
+ * @param target Fenêtre ou texture qui reçoit le menu.
  */
 void Menu::draw(sf::RenderTarget &target) const
 {
@@ -135,7 +135,7 @@ void Menu::draw(sf::RenderTarget &target) const
 }
 
 /**
- * @brief Places the panel and stacks the rows from top to bottom.
+ * @brief Place le panneau et empile les lignes de haut en bas.
  */
 void Menu::layout()
 {

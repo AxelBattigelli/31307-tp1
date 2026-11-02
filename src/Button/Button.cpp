@@ -2,29 +2,31 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Button class implementation
+** Implémentation de la classe Button
 */
 
 #include "Button/Button.hpp"
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/String.hpp>
 #include <algorithm>
 #include <string>
 
 /**
  * @file Button.cpp
- * @brief Clickable label used by a menu row.
+ * @brief Libellé cliquable utilisé par une ligne de menu.
  */
 
 /**
- * @brief Builds a button and gives it its idle colors.
- * @param label Text drawn inside the button.
- * @param font Font used for that text. It must outlive the button.
+ * @brief Construit un bouton et lui donne ses couleurs au repos.
+ * @param label Texte dessiné dans le bouton.
+ * @param font Police de ce texte. Elle doit survivre au bouton.
  */
 Button::Button(const std::string &label, sf::Font &font)
-    : _label(label, font, 16), _idleColor(sf::Color(58, 66, 84)),
-      _hoverColor(sf::Color(78, 88, 110)), _selectedColor(sf::Color(70, 128, 196))
+    : _label(sf::String::fromUtf8(label.begin(), label.end()), font, 16),
+      _idleColor(sf::Color(58, 66, 84)), _hoverColor(sf::Color(78, 88, 110)),
+      _selectedColor(sf::Color(70, 128, 196))
 {
     _label.setFillColor(sf::Color::White);
     _shape.setOutlineThickness(1.F);
@@ -33,11 +35,11 @@ Button::Button(const std::string &label, sf::Font &font)
 }
 
 /**
- * @brief Places the button and centers its label inside the box.
- * @param x Left edge, in pixels.
- * @param y Top edge, in pixels.
- * @param width Box width. The label shrinks if it does not fit.
- * @param height Box height. It also sets the starting character size.
+ * @brief Place le bouton et centre son libellé dans le cadre.
+ * @param x Bord gauche, en pixels.
+ * @param y Bord haut, en pixels.
+ * @param width Largeur du cadre. Le libellé rétrécit s'il ne tient pas.
+ * @param height Hauteur du cadre. Elle fixe aussi la taille de caractère de départ.
  */
 void Button::layout(float x, float y, float width, float height)
 {
@@ -57,9 +59,9 @@ void Button::layout(float x, float y, float width, float height)
 }
 
 /**
- * @brief Tells whether a point lies inside the button.
- * @param point Position in the same coordinates as layout().
- * @return True when the point hits the button rectangle.
+ * @brief Indique si un point se trouve dans le bouton.
+ * @param point Position dans les mêmes coordonnées que layout().
+ * @return Vrai si le point touche le rectangle du bouton.
  */
 auto Button::contains(sf::Vector2f point) const -> bool
 {
@@ -67,8 +69,8 @@ auto Button::contains(sf::Vector2f point) const -> bool
 }
 
 /**
- * @brief Marks the button as the one currently in use.
- * @param selected True for the active button, false for the others.
+ * @brief Marque le bouton comme celui actuellement utilisé.
+ * @param selected Vrai pour le bouton actif, faux pour les autres.
  */
 void Button::setSelected(bool selected)
 {
@@ -77,8 +79,8 @@ void Button::setSelected(bool selected)
 }
 
 /**
- * @brief Tracks the pointer while it is over the button.
- * @param hovered True while the pointer stays inside the rectangle.
+ * @brief Suit le pointeur tant qu'il est sur le bouton.
+ * @param hovered Vrai tant que le pointeur reste dans le rectangle.
  */
 void Button::setHovered(bool hovered)
 {
@@ -87,8 +89,8 @@ void Button::setHovered(bool hovered)
 }
 
 /**
- * @brief Draws the rectangle and its label.
- * @param target Window or texture that receives the button.
+ * @brief Dessine le rectangle et son libellé.
+ * @param target Fenêtre ou texture qui reçoit le bouton.
  */
 void Button::draw(sf::RenderTarget &target) const
 {
@@ -97,9 +99,9 @@ void Button::draw(sf::RenderTarget &target) const
 }
 
 /**
- * @brief Picks the fill color from the current state.
+ * @brief Choisit la couleur de remplissage selon l'état courant.
  *
- * Selection wins over hover. Otherwise the button stays idle.
+ * La sélection l'emporte sur le survol. Sinon le bouton reste au repos.
  */
 void Button::refreshColor()
 {

@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** main file for the project
+** fichier principal du projet
 */
 
 #include "Examples/Display/Display.hpp"
@@ -29,12 +29,12 @@
 
 /**
  * @file main.cpp
- * @brief Opens the window and runs the example chosen in the menu.
+ * @brief Ouvre la fenêtre et lance l'exemple choisi dans le menu.
  */
 
 /**
- * @brief Starts the graphical application.
- * @return 0 when the window closes, 1 when assets/OpenSans.ttf is missing.
+ * @brief Démarre l'application graphique.
+ * @return 0 à la fermeture de la fenêtre, 1 si assets/OpenSans.ttf est absent.
  */
 auto main() -> int
 {
@@ -106,8 +106,9 @@ auto main() -> int
         if (current != nullptr) {
             current->draw(window, area);
         } else {
-            drawPanel(window, area, systemFont.font(), "Examples", "",
-                "Two linked lists and two binary trees.", "Pick an example, then Auto or Manual.");
+            drawPanel(window, area, systemFont.font(), "Exemples", "",
+                "Deux listes chaînées et deux arbres binaires.",
+                "Choisissez un exemple, puis Auto ou Manuel.");
         }
         menu.draw(window);
         window.display();

@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Step by step search in a binary tree
+** Recherche pas à pas dans un arbre binaire
 */
 
 #include "Examples/TreeSearch/TreeSearch.hpp"
@@ -18,7 +18,7 @@
 
 /**
  * @file TreeSearch.cpp
- * @brief Searches a ready binary tree, including values that are absent.
+ * @brief Parcourt un arbre binaire déjà construit, y compris des valeurs absentes.
  */
 
 namespace
@@ -28,23 +28,23 @@ namespace
 } // namespace
 
 /**
- * @brief Builds the search example with the application font.
- * @param font Font used for the panel and the nodes.
+ * @brief Construit l'exemple de recherche avec la police de l'application.
+ * @param font Police du panneau et des nœuds.
  */
 TreeSearch::TreeSearch(const sf::Font &font) : Example(font) {}
 
 /**
- * @brief Returns the name shown in the menu.
- * @return The menu label of this example.
+ * @brief Renvoie le nom affiché dans le menu.
+ * @return Le libellé de menu de cet exemple.
  */
 auto TreeSearch::name() const -> const char *
 {
-    return "Search";
+    return "Recherche";
 }
 
 /**
- * @brief Builds the tree, then records the search of each target.
- * @param mode Auto or Manual.
+ * @brief Construit l'arbre, puis enregistre la recherche de chaque cible.
+ * @param mode Auto ou Manuel.
  */
 void TreeSearch::start(Mode mode)
 {
@@ -57,13 +57,13 @@ void TreeSearch::start(Mode mode)
     for (int const target : kTargets) {
         record(target);
     }
-    _message = "Tree ready. Searching for 6, 14, 2, then 9.";
+    _message = "Arbre prêt. Recherche de 6, 14, 2, puis 9.";
     prepare(mode, _steps.size());
 }
 
 /**
- * @brief Stores one step for each comparison made while looking for a value.
- * @param target Value to search. It may be missing from the tree.
+ * @brief Mémorise une étape pour chaque comparaison faite en cherchant une valeur.
+ * @param target Valeur à chercher. Elle peut être absente de l'arbre.
  */
 void TreeSearch::record(int target)
 {
@@ -73,12 +73,12 @@ void TreeSearch::record(int target)
 
     while (node != nullptr) {
         const std::string here = std::to_string(node->value);
-        const std::string prefix = first ? "Search for " + targetText + ". " : "";
+        const std::string prefix = first ? "Recherche de " + targetText + ". " : "";
         first = false;
 
         if (node->value == target) {
             _steps.push_back(
-                Step{.node = node, .message = prefix + targetText + " is in the tree."});
+                Step{.node = node, .message = prefix + targetText + " est dans l'arbre."});
             return;
         }
 
@@ -86,28 +86,28 @@ void TreeSearch::record(int target)
             if (node->left == nullptr) {
                 _steps.push_back(Step{.node = node,
                     .message = prefix + targetText + " < " + here
-                        + " and the left child is empty: not found."});
+                        + " et le fils gauche est vide : introuvable."});
                 return;
             }
-            _steps.push_back(
-                Step{.node = node, .message = prefix + targetText + " < " + here + ": go left."});
+            _steps.push_back(Step{.node = node,
+                .message = prefix + targetText + " < " + here + " : aller à gauche."});
             node = node->left.get();
         } else {
             if (node->right == nullptr) {
                 _steps.push_back(Step{.node = node,
                     .message = prefix + targetText + " > " + here
-                        + " and the right child is empty: not found."});
+                        + " et le fils droit est vide : introuvable."});
                 return;
             }
-            _steps.push_back(
-                Step{.node = node, .message = prefix + targetText + " > " + here + ": go right."});
+            _steps.push_back(Step{.node = node,
+                .message = prefix + targetText + " > " + here + " : aller à droite."});
             node = node->right.get();
         }
     }
 }
 
 /**
- * @brief Highlights the node compared during the current search step.
+ * @brief Met en évidence le nœud comparé pendant l'étape de recherche courante.
  */
 void TreeSearch::applyStep()
 {
@@ -117,13 +117,13 @@ void TreeSearch::applyStep()
 }
 
 /**
- * @brief Draws the full tree and the node of the current comparison.
- * @param target Surface that receives the example.
- * @param area Left part of the window.
+ * @brief Dessine l'arbre complet et le nœud de la comparaison courante.
+ * @param target Surface qui reçoit l'exemple.
+ * @param area Partie gauche de la fenêtre.
  */
 void TreeSearch::draw(sf::RenderTarget &target, sf::FloatRect area) const
 {
     const DrawArea drawn =
-        drawPanel(target, area, font(), "Search", stepLabel(), _message, hint());
+        drawPanel(target, area, font(), "Recherche", stepLabel(), _message, hint());
     drawTree(target, font(), drawn.diagram, _tree.root(), _active);
 }

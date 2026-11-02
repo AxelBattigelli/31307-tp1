@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Drawing helpers for the examples
+** Fonctions de dessin des exemples
 */
 
 #include "Examples/Display/Display.hpp"
@@ -26,7 +26,7 @@
 
 /**
  * @file Display.cpp
- * @brief Panel, arrows and binary tree drawing shared by the examples.
+ * @brief Panneau, flèches et dessin d'arbre binaire partagés par les exemples.
  */
 
 namespace
@@ -37,10 +37,10 @@ namespace
     const sf::Color kActive(70, 128, 196);
 
     /**
-     * @brief Shrinks a text until it fits a maximum width.
-     * @param text Text whose character size may decrease.
-     * @param maxWidth Width the text must stay inside.
-     * @param minimum Smallest character size allowed.
+     * @brief Réduit un texte jusqu'à ce qu'il tienne dans une largeur maximale.
+     * @param text Texte dont la taille de caractère peut diminuer.
+     * @param maxWidth Largeur que le texte doit respecter.
+     * @param minimum Plus petite taille de caractère autorisée.
      */
     void shrinkToFit(sf::Text &text, float maxWidth, unsigned minimum)
     {
@@ -50,11 +50,11 @@ namespace
     }
 
     /**
-     * @brief Gives each node an in-order rank and records the tree depth.
-     * @param node Subtree to index. Nothing is done for a null node.
-     * @param depth Depth of this node. The root is zero.
-     * @param rank Next free horizontal slot. It increases at each visited node.
-     * @param maxDepth Deepest depth seen so far.
+     * @brief Donne à chaque nœud un rang en ordre infixe et note la profondeur de l'arbre.
+     * @param node Sous-arbre à indexer. Rien n'est fait pour un nœud nul.
+     * @param depth Profondeur de ce nœud. La racine vaut zéro.
+     * @param rank Prochain emplacement horizontal libre. Il augmente à chaque nœud visité.
+     * @param maxDepth Plus grande profondeur vue jusqu'ici.
      */
     void indexNodes(const TreeNode *node, int depth, int &rank, int &maxDepth,
         std::map<const TreeNode *, std::pair<int, int>> &info)
@@ -71,9 +71,9 @@ namespace
     }
 
     /**
-     * @brief Draws the lines that connect a node to its children.
-     * @param target Surface that receives the lines.
-     * @param node Subtree whose links are drawn.
+     * @brief Dessine les traits qui relient un nœud à ses fils.
+     * @param target Surface qui reçoit les traits.
+     * @param node Sous-arbre dont les liens sont dessinés.
      */
     void drawLinks(sf::RenderTarget &target, const TreeNode *node,
         const std::map<const TreeNode *, std::pair<int, int>> &info, float x0, float y0,
@@ -103,11 +103,11 @@ namespace
     }
 
     /**
-     * @brief Draws every node as a circle. The active node is filled in blue.
-     * @param target Surface that receives the circles.
-     * @param font Font used for the values.
-     * @param node Subtree to draw.
-     * @param active Node highlighted for the current step. May be null.
+     * @brief Dessine chaque nœud comme un cercle. Le nœud actif est rempli en bleu.
+     * @param target Surface qui reçoit les cercles.
+     * @param font Police des valeurs.
+     * @param node Sous-arbre à dessiner.
+     * @param active Nœud mis en évidence pour l'étape courante. Peut être nul.
      */
     void drawNodes(sf::RenderTarget &target, const sf::Font &font, const TreeNode *node,
         const TreeNode *active, const std::map<const TreeNode *, std::pair<int, int>> &info,
@@ -134,13 +134,13 @@ namespace
         circle.setOutlineColor(isActive ? kActive : sf::Color(180, 188, 202));
         target.draw(circle);
 
-        sf::Text value(std::to_string(node->value), font, 16);
+        sf::Text value(utf8(std::to_string(node->value)), font, 16);
         value.setFillColor(isActive ? sf::Color::White : kInk);
         placeText(value, center.x, center.y, true);
         target.draw(value);
 
         if (nodeInfo.second == 0 && center.y - radius > area.top + 16.F) {
-            sf::Text label("root", font, 14);
+            sf::Text label(utf8("racine"), font, 14);
             label.setFillColor(kMuted);
             placeText(label, center.x, center.y - radius - 12.F, true);
             target.draw(label);
@@ -150,11 +150,11 @@ namespace
 } // namespace
 
 /**
- * @brief Moves a text so that a point is its top-left corner or its center.
- * @param text Text to position. Its origin is updated.
- * @param x Horizontal position.
- * @param y Vertical position.
- * @param center True to center the text on the point.
+ * @brief Déplace un texte pour qu'un point soit son coin haut-gauche ou son centre.
+ * @param text Texte à positionner. Son origine est mise à jour.
+ * @param x Position horizontale.
+ * @param y Position verticale.
+ * @param center Vrai pour centrer le texte sur le point.
  */
 void placeText(sf::Text &text, float x, float y, bool center)
 {
@@ -168,11 +168,11 @@ void placeText(sf::Text &text, float x, float y, bool center)
 }
 
 /**
- * @brief Draws a horizontal arrow pointing to the right.
- * @param target Surface that receives the arrow.
- * @param x1 Start of the shaft.
- * @param x2 Tip of the arrow.
- * @param y Vertical center of the arrow.
+ * @brief Dessine une flèche horizontale vers la droite.
+ * @param target Surface qui reçoit la flèche.
+ * @param x1 Début de la hampe.
+ * @param x2 Pointe de la flèche.
+ * @param y Centre vertical de la flèche.
  */
 void drawRightArrow(sf::RenderTarget &target, float x1, float x2, float y)
 {
@@ -191,11 +191,11 @@ void drawRightArrow(sf::RenderTarget &target, float x1, float x2, float y)
 }
 
 /**
- * @brief Draws a vertical arrow pointing down.
- * @param target Surface that receives the arrow.
- * @param x Horizontal center of the arrow.
- * @param y1 Start of the shaft.
- * @param y2 Tip of the arrow.
+ * @brief Dessine une flèche verticale vers le bas.
+ * @param target Surface qui reçoit la flèche.
+ * @param x Centre horizontal de la flèche.
+ * @param y1 Début de la hampe.
+ * @param y2 Pointe de la flèche.
  */
 void drawDownArrow(sf::RenderTarget &target, float x, float y1, float y2)
 {
@@ -214,15 +214,15 @@ void drawDownArrow(sf::RenderTarget &target, float x, float y1, float y2)
 }
 
 /**
- * @brief Draws the white card, the title, the message and the hint.
- * @param target Surface that receives the card.
- * @param area Left part of the window reserved for the example.
- * @param font Font used for every text of the card.
- * @param title Title at the top of the card.
- * @param step Step counter. An empty string hides it.
- * @param message Sentence that explains the current step.
- * @param hint Sentence shown at the bottom of the card.
- * @return The card rectangle and the free area left for the diagram.
+ * @brief Dessine la carte blanche, le titre, le message et l'indication.
+ * @param target Surface qui reçoit la carte.
+ * @param area Partie gauche de la fenêtre réservée à l'exemple.
+ * @param font Police de tous les textes de la carte.
+ * @param title Titre en haut de la carte.
+ * @param step Compteur d'étapes. Une chaîne vide le masque.
+ * @param message Phrase qui explique l'étape courante.
+ * @param hint Phrase affichée en bas de la carte.
+ * @return Le rectangle de la carte et la zone libre laissée au schéma.
  */
 auto drawPanel(sf::RenderTarget &target, sf::FloatRect area, const sf::Font &font,
     const std::string &title, const std::string &step, const std::string &message,
@@ -246,7 +246,7 @@ auto drawPanel(sf::RenderTarget &target, sf::FloatRect area, const sf::Font &fon
     const float textWidth = std::max(40.F, card.getSize().x - 56.F);
     float y = cardY + 20.F;
 
-    sf::Text titleText(title, font, 24);
+    sf::Text titleText(utf8(title), font, 24);
     titleText.setStyle(sf::Text::Bold);
     titleText.setFillColor(kInk);
     shrinkToFit(titleText, textWidth, 16);
@@ -255,7 +255,7 @@ auto drawPanel(sf::RenderTarget &target, sf::FloatRect area, const sf::Font &fon
     y += titleText.getCharacterSize() + 10.F;
 
     if (!step.empty()) {
-        sf::Text stepText(step, font, 16);
+        sf::Text stepText(utf8(step), font, 16);
         stepText.setFillColor(kMuted);
         shrinkToFit(stepText, textWidth, 12);
         placeText(stepText, left, y, false);
@@ -264,7 +264,7 @@ auto drawPanel(sf::RenderTarget &target, sf::FloatRect area, const sf::Font &fon
     }
 
     if (!message.empty()) {
-        sf::Text messageText(message, font, 20);
+        sf::Text messageText(utf8(message), font, 20);
         messageText.setFillColor(sf::Color(40, 48, 64));
         shrinkToFit(messageText, textWidth, 13);
         placeText(messageText, left, y, false);
@@ -272,7 +272,7 @@ auto drawPanel(sf::RenderTarget &target, sf::FloatRect area, const sf::Font &fon
         y += messageText.getCharacterSize() + 16.F;
     }
 
-    sf::Text hintText(hint, font, 16);
+    sf::Text hintText(utf8(hint), font, 16);
     hintText.setFillColor(kMuted);
     shrinkToFit(hintText, textWidth, 12);
     const float hintY = cardY + card.getSize().y - 24.F - hintText.getCharacterSize();
@@ -286,12 +286,12 @@ auto drawPanel(sf::RenderTarget &target, sf::FloatRect area, const sf::Font &fon
 }
 
 /**
- * @brief Lays the tree out in order and draws its links and nodes.
- * @param target Surface that receives the tree.
- * @param font Font used for the node values.
- * @param area Free area inside the card.
- * @param root Root of the tree. An empty tree draws a short message.
- * @param active Node highlighted for the current step. May be null.
+ * @brief Dispose l'arbre en ordre et dessine ses liens et ses nœuds.
+ * @param target Surface qui reçoit l'arbre.
+ * @param font Police des valeurs des nœuds.
+ * @param area Zone libre à l'intérieur de la carte.
+ * @param root Racine de l'arbre. Un arbre vide affiche un court message.
+ * @param active Nœud mis en évidence pour l'étape courante. Peut être nul.
  */
 void drawTree(sf::RenderTarget &target, const sf::Font &font, sf::FloatRect area,
     const TreeNode *root, const TreeNode *active)
@@ -301,7 +301,7 @@ void drawTree(sf::RenderTarget &target, const sf::Font &font, sf::FloatRect area
     }
 
     if (root == nullptr) {
-        sf::Text empty("No node", font, 18);
+        sf::Text empty(utf8("Aucun nœud"), font, 18);
         empty.setFillColor(sf::Color(140, 148, 162));
         placeText(empty, area.left + (area.width / 2.F), area.top + (area.height / 2.F), true);
         target.draw(empty);

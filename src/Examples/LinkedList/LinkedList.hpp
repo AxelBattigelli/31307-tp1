@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Linked list declaration
+** Déclaration de la liste chaînée
 */
 
 #pragma once

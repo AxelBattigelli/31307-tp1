@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Binary search tree with smart pointers
+** Arbre binaire de recherche avec pointeurs intelligents
 */
 
 #include "Examples/BinaryTree/BinaryTree.hpp"
@@ -11,11 +11,11 @@
 
 /**
  * @file BinaryTree.cpp
- * @brief Binary search tree whose children are owned by std::unique_ptr.
+ * @brief Arbre binaire de recherche dont les fils sont possédés par std::unique_ptr.
  */
 
 /**
- * @brief Destroys the whole tree from the root.
+ * @brief Détruit tout l'arbre à partir de la racine.
  */
 void BinaryTree::clear()
 {
@@ -23,8 +23,8 @@ void BinaryTree::clear()
 }
 
 /**
- * @brief Tells whether the tree has no root.
- * @return True when the tree is empty.
+ * @brief Indique si l'arbre n'a pas de racine.
+ * @return Vrai si l'arbre est vide.
  */
 auto BinaryTree::empty() const -> bool
 {
@@ -32,8 +32,8 @@ auto BinaryTree::empty() const -> bool
 }
 
 /**
- * @brief Gives a pointer to the root so a caller can walk the tree.
- * @return The root, or nullptr when the tree is empty.
+ * @brief Donne un pointeur vers la racine pour qu'un appelant puisse parcourir l'arbre.
+ * @return La racine, ou nullptr si l'arbre est vide.
  */
 auto BinaryTree::root() -> TreeNode *
 {
@@ -41,8 +41,8 @@ auto BinaryTree::root() -> TreeNode *
 }
 
 /**
- * @brief Gives a read-only pointer to the root.
- * @return The root, or nullptr when the tree is empty.
+ * @brief Donne un pointeur en lecture seule vers la racine.
+ * @return La racine, ou nullptr si l'arbre est vide.
  */
 auto BinaryTree::root() const -> const TreeNode *
 {
@@ -50,8 +50,8 @@ auto BinaryTree::root() const -> const TreeNode *
 }
 
 /**
- * @brief Creates the root node.
- * @param value Value stored in the root.
+ * @brief Crée le nœud racine.
+ * @param value Valeur stockée dans la racine.
  */
 void BinaryTree::addRoot(int value)
 {
@@ -59,11 +59,11 @@ void BinaryTree::addRoot(int value)
 }
 
 /**
- * @brief Attaches a new child to a parent. The parent owns that child.
- * @param parent Node that receives the child.
- * @param left True for the left child, false for the right child.
- * @param value Value stored in the new node.
- * @return The node that was just created.
+ * @brief Attache un nouveau fils à un parent. Le parent possède ce fils.
+ * @param parent Nœud qui reçoit le fils.
+ * @param left Vrai pour le fils gauche, faux pour le fils droit.
+ * @param value Valeur stockée dans le nouveau nœud.
+ * @return Le nœud qui vient d'être créé.
  */
 auto BinaryTree::addChild(TreeNode &parent, bool left, int value) -> TreeNode *
 {
@@ -73,8 +73,8 @@ auto BinaryTree::addChild(TreeNode &parent, bool left, int value) -> TreeNode *
 }
 
 /**
- * @brief Inserts a value by walking left or right until an empty link.
- * @param value Value to insert. A value already present is ignored.
+ * @brief Insère une valeur en allant à gauche ou à droite jusqu'à un lien vide.
+ * @param value Valeur à insérer. Une valeur déjà présente est ignorée.
  */
 void BinaryTree::insert(int value)
 {
@@ -83,7 +83,7 @@ void BinaryTree::insert(int value)
         return;
     }
 
-    // Walk with a raw pointer. Only the parent owns the new node.
+    // Parcours avec un pointeur brut. Seul le parent possède le nouveau nœud.
     TreeNode *current = _root.get();
     while (true) {
         if (value < current->value) {

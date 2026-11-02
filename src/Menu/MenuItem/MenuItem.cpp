@@ -2,13 +2,14 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Menu row implementation
+** Implémentation d'une ligne de menu
 */
 
 #include "Menu/MenuItem/MenuItem.hpp"
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/String.hpp>
 #include <algorithm>
 #include <optional>
 #include <string>
@@ -16,28 +17,28 @@
 
 /**
  * @file MenuItem.cpp
- * @brief One menu row: a name, an Auto button and a Manual button.
+ * @brief Une ligne de menu : un nom, un bouton Auto et un bouton Manuel.
  */
 
 /**
- * @brief Builds a row with both mode buttons.
- * @param name Text shown on the left of the row.
- * @param font Font shared by the label and the buttons.
+ * @brief Construit une ligne avec les deux boutons de mode.
+ * @param name Texte affiché à gauche de la ligne.
+ * @param font Police partagée par le libellé et les boutons.
  */
 MenuItem::MenuItem(std::string name, sf::Font &font)
-    : _name(std::move(name)), _label(_name, font, 18), _autoButton("Auto", font),
-      _manualButton("Manual", font)
+    : _name(std::move(name)), _label(sf::String::fromUtf8(_name.begin(), _name.end()), font, 18),
+      _autoButton("Auto", font), _manualButton("Manuel", font)
 {
     _label.setFillColor(sf::Color(240, 242, 245));
     _row.setFillColor(sf::Color(40, 48, 64));
 }
 
 /**
- * @brief Places the name and the two buttons inside the row.
- * @param x Left edge of the row.
- * @param y Top edge of the row.
- * @param width Full width available for the row.
- * @param height Full height available for the row.
+ * @brief Place le nom et les deux boutons dans la ligne.
+ * @param x Bord gauche de la ligne.
+ * @param y Bord haut de la ligne.
+ * @param width Largeur totale disponible pour la ligne.
+ * @param height Hauteur totale disponible pour la ligne.
  */
 void MenuItem::layout(float x, float y, float width, float height)
 {
@@ -65,8 +66,8 @@ void MenuItem::layout(float x, float y, float width, float height)
 }
 
 /**
- * @brief Highlights a button while the pointer is over it.
- * @param mouse Pointer position in window coordinates.
+ * @brief Surligne un bouton tant que le pointeur est dessus.
+ * @param mouse Position du pointeur en coordonnées de fenêtre.
  */
 void MenuItem::updateHover(sf::Vector2f mouse)
 {
@@ -75,9 +76,9 @@ void MenuItem::updateHover(sf::Vector2f mouse)
 }
 
 /**
- * @brief Finds which mode button contains the pointer.
- * @param mouse Pointer position in window coordinates.
- * @return The chosen mode, or nothing when the click missed both buttons.
+ * @brief Trouve quel bouton de mode contient le pointeur.
+ * @param mouse Position du pointeur en coordonnées de fenêtre.
+ * @return Le mode choisi, ou rien si le clic a manqué les deux boutons.
  */
 auto MenuItem::hit(sf::Vector2f mouse) const -> std::optional<MenuItem::Mode>
 {
@@ -91,8 +92,8 @@ auto MenuItem::hit(sf::Vector2f mouse) const -> std::optional<MenuItem::Mode>
 }
 
 /**
- * @brief Leaves only the given mode button highlighted.
- * @param mode Active mode, or nothing to clear both buttons.
+ * @brief Ne laisse en surbrillance que le bouton du mode donné.
+ * @param mode Mode actif, ou rien pour effacer les deux boutons.
  */
 void MenuItem::setActiveMode(std::optional<Mode> mode)
 {
@@ -101,8 +102,8 @@ void MenuItem::setActiveMode(std::optional<Mode> mode)
 }
 
 /**
- * @brief Returns the name shown on the row.
- * @return The row name.
+ * @brief Renvoie le nom affiché sur la ligne.
+ * @return Le nom de la ligne.
  */
 auto MenuItem::name() const -> const std::string &
 {
@@ -110,8 +111,8 @@ auto MenuItem::name() const -> const std::string &
 }
 
 /**
- * @brief Draws the row background, the name and both buttons.
- * @param target Window or texture that receives the row.
+ * @brief Dessine le fond de la ligne, le nom et les deux boutons.
+ * @param target Fenêtre ou texture qui reçoit la ligne.
  */
 void MenuItem::draw(sf::RenderTarget &target) const
 {

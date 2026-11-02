@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Shared auto and manual step logic
+** Logique d'étapes partagée, modes auto et manuel
 */
 
 #include "Examples/Example/Example.hpp"
@@ -13,7 +13,7 @@
 
 /**
  * @file Example.cpp
- * @brief Clock and step counter shared by every example.
+ * @brief Horloge et compteur d'étapes partagés par chaque exemple.
  */
 
 namespace
@@ -22,15 +22,15 @@ namespace
 }
 
 /**
- * @brief Stores the font used by the example texts.
- * @param font Font loaded once for the application. It must outlive the example.
+ * @brief Mémorise la police des textes de l'exemple.
+ * @param font Police chargée une fois pour l'application. Elle doit survivre à l'exemple.
  */
 Example::Example(const sf::Font &font) : _font(font) {}
 
 /**
- * @brief Resets the run before the first step.
- * @param mode Auto runs on a timer, Manual waits for the space bar.
- * @param total Number of steps in the scenario.
+ * @brief Réinitialise l'exécution avant la première étape.
+ * @param mode Auto avance sur un minuteur, Manuel attend la barre d'espace.
+ * @param total Nombre d'étapes du scénario.
  */
 void Example::prepare(Mode mode, std::size_t total)
 {
@@ -43,8 +43,8 @@ void Example::prepare(Mode mode, std::size_t total)
 }
 
 /**
- * @brief Advances one step in Auto mode when the delay has elapsed.
- * @param dt Seconds since the previous frame.
+ * @brief Avance d'une étape en mode Auto quand le délai est écoulé.
+ * @param dt Secondes depuis l'image précédente.
  */
 void Example::update(float dt)
 {
@@ -60,7 +60,7 @@ void Example::update(float dt)
 }
 
 /**
- * @brief Advances one step when Manual mode is running.
+ * @brief Avance d'une étape quand le mode Manuel est en cours.
  */
 void Example::nextStep()
 {
@@ -71,8 +71,8 @@ void Example::nextStep()
 }
 
 /**
- * @brief Gives the font stored at construction.
- * @return The font used to draw the example.
+ * @brief Donne la police mémorisée à la construction.
+ * @return La police utilisée pour dessiner l'exemple.
  */
 auto Example::font() const -> const sf::Font &
 {
@@ -80,8 +80,8 @@ auto Example::font() const -> const sf::Font &
 }
 
 /**
- * @brief Returns how many steps have already been applied.
- * @return The current step index, starting at zero.
+ * @brief Indique combien d'étapes ont déjà été appliquées.
+ * @return L'indice de l'étape courante, à partir de zéro.
  */
 auto Example::index() const -> std::size_t
 {
@@ -89,37 +89,37 @@ auto Example::index() const -> std::size_t
 }
 
 /**
- * @brief Formats the step counter shown above the diagram.
- * @return A label such as "Step 2 / 8", or an empty string before the start.
+ * @brief Formate le compteur d'étapes affiché au-dessus du schéma.
+ * @return Une étiquette telle que « Étape 2 / 8 », ou une chaîne vide avant le départ.
  */
 auto Example::stepLabel() const -> std::string
 {
     if (!_started) {
         return "";
     }
-    return "Step " + std::to_string(_index) + " / " + std::to_string(_total);
+    return "Étape " + std::to_string(_index) + " / " + std::to_string(_total);
 }
 
 /**
- * @brief Describes what the user can do in the current state.
- * @return A short hint for the bottom of the panel.
+ * @brief Décrit ce que l'utilisateur peut faire dans l'état courant.
+ * @return Une courte indication en bas du panneau.
  */
 auto Example::hint() const -> const char *
 {
     if (!_started) {
-        return "Pick Auto or Manual in the menu.";
+        return "Choisissez Auto ou Manuel dans le menu.";
     }
     if (_finished) {
-        return "Done. Start it again from the menu.";
+        return "Terminé. Relancez-le depuis le menu.";
     }
     if (_mode == Mode::Auto) {
-        return "Auto mode: the steps run on their own.";
+        return "Mode auto : les étapes s'enchaînent seules.";
     }
-    return "Manual mode: press space for the next step.";
+    return "Mode manuel : appuyez sur espace pour l'étape suivante.";
 }
 
 /**
- * @brief Applies the current step and stops when the scenario is over.
+ * @brief Applique l'étape courante et s'arrête quand le scénario est fini.
  */
 void Example::runStep()
 {

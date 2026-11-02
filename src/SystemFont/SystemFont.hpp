@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Application font loaded once from assets
+** Police de l'application, chargée une fois depuis assets
 */
 
 #pragma once

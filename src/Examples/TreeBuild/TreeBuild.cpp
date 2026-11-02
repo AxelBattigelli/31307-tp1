@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Step by step binary tree construction
+** Construction pas à pas d'un arbre binaire
 */
 
 #include "Examples/TreeBuild/TreeBuild.hpp"
@@ -18,7 +18,7 @@
 
 /**
  * @file TreeBuild.cpp
- * @brief Inserts values into a binary search tree one comparison at a time.
+ * @brief Insère des valeurs dans un arbre binaire de recherche, une comparaison à la fois.
  */
 
 namespace
@@ -27,23 +27,23 @@ namespace
 }
 
 /**
- * @brief Builds the tree-construction example with the application font.
- * @param font Font used for the panel and the nodes.
+ * @brief Construit l'exemple de construction d'arbre avec la police de l'application.
+ * @param font Police du panneau et des nœuds.
  */
 TreeBuild::TreeBuild(const sf::Font &font) : Example(font) {}
 
 /**
- * @brief Returns the name shown in the menu.
- * @return The menu label of this example.
+ * @brief Renvoie le nom affiché dans le menu.
+ * @return Le libellé de menu de cet exemple.
  */
 auto TreeBuild::name() const -> const char *
 {
-    return "Binary tree";
+    return "Arbre binaire";
 }
 
 /**
- * @brief Clears the visible tree and prepares the insertion steps.
- * @param mode Auto or Manual.
+ * @brief Vide l'arbre visible et prépare les étapes d'insertion.
+ * @param mode Auto ou Manuel.
  */
 void TreeBuild::start(Mode mode)
 {
@@ -51,13 +51,13 @@ void TreeBuild::start(Mode mode)
     _tree.clear();
     _cursor = nullptr;
     _active = nullptr;
-    _message = "The tree is empty.";
+    _message = "L'arbre est vide.";
     buildScenario();
     prepare(mode, _steps.size());
 }
 
 /**
- * @brief Records every comparison and insertion for the fixed values.
+ * @brief Enregistre chaque comparaison et insertion pour les valeurs fixes.
  */
 void TreeBuild::buildScenario()
 {
@@ -69,9 +69,9 @@ void TreeBuild::buildScenario()
 }
 
 /**
- * @brief Walks a temporary tree and stores one step per comparison.
- * @param simulation Tree that already contains the previous values.
- * @param value Value whose path is recorded.
+ * @brief Parcourt un arbre temporaire et mémorise une étape par comparaison.
+ * @param simulation Arbre qui contient déjà les valeurs précédentes.
+ * @param value Valeur dont le chemin est enregistré.
  */
 void TreeBuild::addSteps(BinaryTree &simulation, int value)
 {
@@ -81,7 +81,7 @@ void TreeBuild::addSteps(BinaryTree &simulation, int value)
             .fromRoot = false,
             .left = false,
             .value = value,
-            .message = std::to_string(value) + " becomes the root."});
+            .message = std::to_string(value) + " devient la racine."});
         return;
     }
 
@@ -96,7 +96,7 @@ void TreeBuild::addSteps(BinaryTree &simulation, int value)
                     .left = true,
                     .value = value,
                     .message = std::to_string(value) + " < " + std::to_string(current->value)
-                        + ": place it on the left."});
+                        + " : le placer à gauche."});
                 return;
             }
             _steps.push_back(Step{.kind = StepKind::Descend,
@@ -104,7 +104,7 @@ void TreeBuild::addSteps(BinaryTree &simulation, int value)
                 .left = true,
                 .value = current->left->value,
                 .message = std::to_string(value) + " < " + std::to_string(current->value)
-                    + ": go down toward " + std::to_string(current->left->value) + "."});
+                    + " : descendre vers " + std::to_string(current->left->value) + "."});
             current = current->left.get();
         } else if (value > current->value) {
             if (!current->right) {
@@ -114,7 +114,7 @@ void TreeBuild::addSteps(BinaryTree &simulation, int value)
                     .left = false,
                     .value = value,
                     .message = std::to_string(value) + " > " + std::to_string(current->value)
-                        + ": place it on the right."});
+                        + " : le placer à droite."});
                 return;
             }
             _steps.push_back(Step{.kind = StepKind::Descend,
@@ -122,7 +122,7 @@ void TreeBuild::addSteps(BinaryTree &simulation, int value)
                 .left = false,
                 .value = current->right->value,
                 .message = std::to_string(value) + " > " + std::to_string(current->value)
-                    + ": go down toward " + std::to_string(current->right->value) + "."});
+                    + " : descendre vers " + std::to_string(current->right->value) + "."});
             current = current->right.get();
         } else {
             return;
@@ -132,7 +132,7 @@ void TreeBuild::addSteps(BinaryTree &simulation, int value)
 }
 
 /**
- * @brief Replays one recorded step on the tree shown on screen.
+ * @brief Rejoue une étape enregistrée sur l'arbre affiché à l'écran.
  */
 void TreeBuild::applyStep()
 {
@@ -155,13 +155,13 @@ void TreeBuild::applyStep()
 }
 
 /**
- * @brief Draws the tree built so far and highlights the current node.
- * @param target Surface that receives the example.
- * @param area Left part of the window.
+ * @brief Dessine l'arbre construit jusqu'ici et met en évidence le nœud courant.
+ * @param target Surface qui reçoit l'exemple.
+ * @param area Partie gauche de la fenêtre.
  */
 void TreeBuild::draw(sf::RenderTarget &target, sf::FloatRect area) const
 {
     const DrawArea drawn =
-        drawPanel(target, area, font(), "Binary tree", stepLabel(), _message, hint());
+        drawPanel(target, area, font(), "Arbre binaire", stepLabel(), _message, hint());
     drawTree(target, font(), drawn.diagram, _tree.root(), _active);
 }

@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Button class declaration
+** Déclaration de la classe Button
 */
 
 #pragma once

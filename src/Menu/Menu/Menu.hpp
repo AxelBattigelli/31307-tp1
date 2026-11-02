@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Menu class declaration
+** Déclaration de la classe Menu
 */
 
 #pragma once

@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Factory that builds a menu row
+** Fabrique qui construit une ligne de menu
 */
 
 #pragma once
@@ -13,8 +13,8 @@
 
 class MenuItem;
 
-// Factory Method: Menu does not build a row itself.
-// The factory assembles the name, the auto button and the manual button.
+// Méthode fabrique : Menu ne construit pas lui-même une ligne.
+// La fabrique assemble le nom, le bouton auto et le bouton manuel.
 class MenuItemFactory {
   public:
     virtual ~MenuItemFactory() = default;

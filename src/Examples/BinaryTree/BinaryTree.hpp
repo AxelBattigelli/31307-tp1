@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Binary search tree declaration
+** Déclaration de l'arbre binaire de recherche
 */
 
 #pragma once

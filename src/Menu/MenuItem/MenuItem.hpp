@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Menu row declaration
+** Déclaration d'une ligne de menu
 */
 
 #pragma once

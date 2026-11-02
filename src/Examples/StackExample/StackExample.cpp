@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Stack example, auto and manual modes
+** Exemple de pile, modes auto et manuel
 */
 
 #include "Examples/StackExample/StackExample.hpp"
@@ -23,7 +23,7 @@
 
 /**
  * @file StackExample.cpp
- * @brief Values are pushed and popped at the top of a linked list.
+ * @brief Des valeurs sont empilées et dépilées au sommet d'une liste chaînée.
  */
 
 namespace
@@ -36,16 +36,16 @@ namespace
     };
 
     constexpr Step kSteps[] = {
-        {.push = true, .value = 4, .message = "Push 4. It becomes the top."},
-        {.push = true, .value = 7, .message = "Push 7 above 4."},
-        {.push = true, .value = 1, .message = "Push 1. The top changes."},
-        {.push = true, .value = 9, .message = "Push 9."},
-        {.push = false, .value = 0, .message = "Pop 9, the last value in."},
-        {.push = true, .value = 3, .message = "Push 3."},
-        {.push = false, .value = 0, .message = "Pop 3."},
-        {.push = false, .value = 0, .message = "Pop 1. The top is 7 again."},
-        {.push = false, .value = 0, .message = "Pop 7."},
-        {.push = false, .value = 0, .message = "Pop 4. The stack is empty."},
+        {.push = true, .value = 4, .message = "Empiler 4. Il devient le sommet."},
+        {.push = true, .value = 7, .message = "Empiler 7 au-dessus de 4."},
+        {.push = true, .value = 1, .message = "Empiler 1. Le sommet change."},
+        {.push = true, .value = 9, .message = "Empiler 9."},
+        {.push = false, .value = 0, .message = "Dépiler 9, la dernière valeur entrée."},
+        {.push = true, .value = 3, .message = "Empiler 3."},
+        {.push = false, .value = 0, .message = "Dépiler 3."},
+        {.push = false, .value = 0, .message = "Dépiler 1. Le sommet redevient 7."},
+        {.push = false, .value = 0, .message = "Dépiler 7."},
+        {.push = false, .value = 0, .message = "Dépiler 4. La pile est vide."},
     };
 
     constexpr std::size_t kStepCount = sizeof(kSteps) / sizeof(kSteps[0]);
@@ -53,34 +53,34 @@ namespace
 } // namespace
 
 /**
- * @brief Builds the stack example with the application font.
- * @param font Font used for the panel and the nodes.
+ * @brief Construit l'exemple de pile avec la police de l'application.
+ * @param font Police du panneau et des nœuds.
  */
 StackExample::StackExample(const sf::Font &font) : Example(font) {}
 
 /**
- * @brief Returns the name shown in the menu.
- * @return The menu label of this example.
+ * @brief Renvoie le nom affiché dans le menu.
+ * @return Le libellé de menu de cet exemple.
  */
 auto StackExample::name() const -> const char *
 {
-    return "Stack";
+    return "Pile";
 }
 
 /**
- * @brief Clears the stack and arms the scenario.
- * @param mode Auto or Manual.
+ * @brief Vide la pile et arme le scénario.
+ * @param mode Auto ou Manuel.
  */
 void StackExample::start(Mode mode)
 {
     _list.clear();
     _focus = -1;
-    _message = "The stack is empty.";
+    _message = "La pile est vide.";
     prepare(mode, kStepCount);
 }
 
 /**
- * @brief Pushes or pops the value of the current step.
+ * @brief Empile ou dépile la valeur de l'étape courante.
  */
 void StackExample::applyStep()
 {
@@ -96,20 +96,20 @@ void StackExample::applyStep()
 }
 
 /**
- * @brief Draws the stack with the top node above the others.
- * @param target Surface that receives the example.
- * @param area Left part of the window.
+ * @brief Dessine la pile avec le nœud du sommet au-dessus des autres.
+ * @param target Surface qui reçoit l'exemple.
+ * @param area Partie gauche de la fenêtre.
  */
 void StackExample::draw(sf::RenderTarget &target, sf::FloatRect area) const
 {
-    const DrawArea drawn = drawPanel(target, area, font(), "Stack", stepLabel(), _message, hint());
+    const DrawArea drawn = drawPanel(target, area, font(), "Pile", stepLabel(), _message, hint());
     if (drawn.diagram.width < 40.F || drawn.diagram.height < 30.F) {
         return;
     }
 
     const std::vector<int> values = _list.values();
     if (values.empty()) {
-        sf::Text empty("Empty stack", font(), 18);
+        sf::Text empty(utf8("Pile vide"), font(), 18);
         empty.setFillColor(sf::Color(140, 148, 162));
         placeText(empty, drawn.diagram.left + (drawn.diagram.width / 2.F),
             drawn.diagram.top + (drawn.diagram.height / 2.F), true);
@@ -141,19 +141,19 @@ void StackExample::draw(sf::RenderTarget &target, sf::FloatRect area) const
         box.setOutlineColor(active ? sf::Color(70, 128, 196) : sf::Color(180, 188, 202));
         target.draw(box);
 
-        sf::Text value(std::to_string(values[i]), font(), 20);
+        sf::Text value(utf8(std::to_string(values[i])), font(), 20);
         value.setFillColor(active ? sf::Color::White : sf::Color(28, 34, 46));
         placeText(value, x + (width / 2.F), y + (height / 2.F), true);
         target.draw(value);
 
         const char *role = nullptr;
         if (i == 0) {
-            role = "top";
+            role = "sommet";
         } else if (i + 1 == count) {
-            role = "bottom";
+            role = "fond";
         }
         if (role != nullptr) {
-            sf::Text label(role, font(), 14);
+            sf::Text label(utf8(role), font(), 14);
             label.setFillColor(sf::Color(96, 108, 128));
             const sf::FloatRect bounds = label.getLocalBounds();
             label.setOrigin(bounds.left, bounds.top + (bounds.height / 2.F));

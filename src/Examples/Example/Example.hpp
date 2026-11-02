@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Base class for the four examples
+** Classe de base des quatre exemples
 */
 
 #pragma once

@@ -2,7 +2,7 @@
 ** Axel BATTIGELLI, 2026
 ** TP1 - Complément en programmation
 ** File description:
-** Tree construction example declaration
+** Déclaration de l'exemple de construction d'arbre
 */
 
 #pragma once
@@ -40,5 +40,5 @@ class TreeBuild : public Example {
     BinaryTree _tree;
     TreeNode *_cursor = nullptr;
     const TreeNode *_active = nullptr;
-    std::string _message = "Pick Auto or Manual in the menu.";
+    std::string _message = "Choisissez Auto ou Manuel dans le menu.";
 };
