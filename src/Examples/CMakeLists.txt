@@ -1,0 +1,8 @@
+add_subdirectory(Example)
+add_subdirectory(Display)
+add_subdirectory(LinkedList)
+add_subdirectory(BinaryTree)
+add_subdirectory(QueueExample)
+add_subdirectory(StackExample)
+add_subdirectory(TreeBuild)
+add_subdirectory(TreeSearch)
