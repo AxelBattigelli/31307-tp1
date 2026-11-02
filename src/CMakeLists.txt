@@ -22,6 +22,7 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 
 if(WIN32)
     set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
+    target_link_libraries(${PROJECT_NAME} PRIVATE sfml-main)
 
     if(BUILD_SHARED_LIBS)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
