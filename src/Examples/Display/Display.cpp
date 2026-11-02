@@ -20,6 +20,7 @@
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <algorithm>
+#include <array>
 #include <map>
 #include <string>
 #include <utility>
@@ -51,9 +52,9 @@ namespace
 
     /**
      * @brief Donne à chaque nœud un rang en ordre infixe et note la profondeur de l'arbre.
-     * @param node Sous-arbre à indexer. Rien n'est fait pour un nœud nul.
-     * @param depth Profondeur de ce nœud. La racine vaut zéro.
-     * @param rank Prochain emplacement horizontal libre. Il augmente à chaque nœud visité.
+     * @param node Sous-arbre à indexer. Rien n'est fait pour un noeud nul.
+     * @param depth Profondeur de ce noeud. La racine vaut zéro.
+     * @param rank Prochain emplacement horizontal libre. Il augmente à chaque noeud visité.
      * @param maxDepth Plus grande profondeur vue jusqu'ici.
      */
     void indexNodes(const TreeNode *node, int depth, int &rank, int &maxDepth,
@@ -63,11 +64,11 @@ namespace
             return;
         }
 
-        indexNodes(node->left.get(), depth + 1, rank, maxDepth, info);
+        indexNodes(node->left(), depth + 1, rank, maxDepth, info);
         info[node] = {rank, depth};
         ++rank;
         maxDepth = std::max(depth, maxDepth);
-        indexNodes(node->right.get(), depth + 1, rank, maxDepth, info);
+        indexNodes(node->right(), depth + 1, rank, maxDepth, info);
     }
 
     /**
@@ -85,7 +86,7 @@ namespace
 
         const auto &nodeInfo = info.at(node);
         const sf::Vector2f parent(x0 + (nodeInfo.first * stepX), y0 + (nodeInfo.second * stepY));
-        const TreeNode *const children[] = {node->left.get(), node->right.get()};
+        const std::array<const TreeNode *, 2> children = {node->left(), node->right()};
         for (const TreeNode *child : children) {
             if (child == nullptr) {
                 continue;
@@ -93,11 +94,11 @@ namespace
             const auto &childInfo = info.at(child);
             const sf::Vector2f end(
                 x0 + (childInfo.first * stepX), y0 + (childInfo.second * stepY));
-            sf::Vertex line[] = {
+            const std::array<sf::Vertex, 2> line = {
                 sf::Vertex(parent, kMuted),
                 sf::Vertex(end, kMuted),
             };
-            target.draw(line, 2, sf::Lines);
+            target.draw(line.data(), line.size(), sf::Lines);
             drawLinks(target, child, info, x0, y0, stepX, stepY);
         }
     }
@@ -117,10 +118,8 @@ namespace
             return;
         }
 
-        drawNodes(
-            target, font, node->left.get(), active, info, x0, y0, stepX, stepY, radius, area);
-        drawNodes(
-            target, font, node->right.get(), active, info, x0, y0, stepX, stepY, radius, area);
+        drawNodes(target, font, node->left(), active, info, x0, y0, stepX, stepY, radius, area);
+        drawNodes(target, font, node->right(), active, info, x0, y0, stepX, stepY, radius, area);
 
         const auto &nodeInfo = info.at(node);
         const sf::Vector2f center(x0 + (nodeInfo.first * stepX), y0 + (nodeInfo.second * stepY));
@@ -134,7 +133,7 @@ namespace
         circle.setOutlineColor(isActive ? kActive : sf::Color(180, 188, 202));
         target.draw(circle);
 
-        sf::Text value(utf8(std::to_string(node->value)), font, 16);
+        sf::Text value(utf8(std::to_string(node->value())), font, 16);
         value.setFillColor(isActive ? sf::Color::White : kInk);
         placeText(value, center.x, center.y, true);
         target.draw(value);

@@ -9,12 +9,23 @@
 
 #include <memory>
 
-struct TreeNode {
-    int value;
-    std::unique_ptr<TreeNode> left;
-    std::unique_ptr<TreeNode> right;
+class TreeNode {
+  public:
+    explicit TreeNode(int value) : _value(value) {}
 
-    explicit TreeNode(int v) : value(v) {}
+    [[nodiscard]] auto value() const -> int { return _value; }
+
+    [[nodiscard]] auto left() const -> const TreeNode * { return _left.get(); }
+    [[nodiscard]] auto right() const -> const TreeNode * { return _right.get(); }
+    auto left() -> TreeNode * { return _left.get(); }
+    auto right() -> TreeNode * { return _right.get(); }
+
+  private:
+    friend class BinaryTree;
+
+    int _value;
+    std::unique_ptr<TreeNode> _left;
+    std::unique_ptr<TreeNode> _right;
 };
 
 class BinaryTree {

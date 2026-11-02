@@ -72,18 +72,18 @@ void TreeSearch::record(int target)
     bool first = true;
 
     while (node != nullptr) {
-        const std::string here = std::to_string(node->value);
+        const std::string here = std::to_string(node->value());
         const std::string prefix = first ? "Recherche de " + targetText + ". " : "";
         first = false;
 
-        if (node->value == target) {
+        if (node->value() == target) {
             _steps.push_back(
                 Step{.node = node, .message = prefix + targetText + " est dans l'arbre."});
             return;
         }
 
-        if (target < node->value) {
-            if (node->left == nullptr) {
+        if (target < node->value()) {
+            if (node->left() == nullptr) {
                 _steps.push_back(Step{.node = node,
                     .message = prefix + targetText + " < " + here
                         + " et le fils gauche est vide : introuvable."});
@@ -91,9 +91,9 @@ void TreeSearch::record(int target)
             }
             _steps.push_back(Step{.node = node,
                 .message = prefix + targetText + " < " + here + " : aller à gauche."});
-            node = node->left.get();
+            node = node->left();
         } else {
-            if (node->right == nullptr) {
+            if (node->right() == nullptr) {
                 _steps.push_back(Step{.node = node,
                     .message = prefix + targetText + " > " + here
                         + " et le fils droit est vide : introuvable."});
@@ -101,7 +101,7 @@ void TreeSearch::record(int target)
             }
             _steps.push_back(Step{.node = node,
                 .message = prefix + targetText + " > " + here + " : aller à droite."});
-            node = node->right.get();
+            node = node->right();
         }
     }
 }

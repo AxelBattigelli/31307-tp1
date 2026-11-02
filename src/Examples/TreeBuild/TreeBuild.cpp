@@ -88,42 +88,42 @@ void TreeBuild::addSteps(BinaryTree &simulation, int value)
     bool first = true;
     TreeNode *current = simulation.root();
     while (current != nullptr) {
-        if (value < current->value) {
-            if (!current->left) {
+        if (value < current->value()) {
+            if (current->left() == nullptr) {
                 simulation.addChild(*current, true, value);
                 _steps.push_back(Step{.kind = StepKind::Place,
                     .fromRoot = first,
                     .left = true,
                     .value = value,
-                    .message = std::to_string(value) + " < " + std::to_string(current->value)
+                    .message = std::to_string(value) + " < " + std::to_string(current->value())
                         + " : le placer à gauche."});
                 return;
             }
             _steps.push_back(Step{.kind = StepKind::Descend,
                 .fromRoot = first,
                 .left = true,
-                .value = current->left->value,
-                .message = std::to_string(value) + " < " + std::to_string(current->value)
-                    + " : descendre vers " + std::to_string(current->left->value) + "."});
-            current = current->left.get();
-        } else if (value > current->value) {
-            if (!current->right) {
+                .value = current->left()->value(),
+                .message = std::to_string(value) + " < " + std::to_string(current->value())
+                    + " : descendre vers " + std::to_string(current->left()->value()) + "."});
+            current = current->left();
+        } else if (value > current->value()) {
+            if (current->right() == nullptr) {
                 simulation.addChild(*current, false, value);
                 _steps.push_back(Step{.kind = StepKind::Place,
                     .fromRoot = first,
                     .left = false,
                     .value = value,
-                    .message = std::to_string(value) + " > " + std::to_string(current->value)
+                    .message = std::to_string(value) + " > " + std::to_string(current->value())
                         + " : le placer à droite."});
                 return;
             }
             _steps.push_back(Step{.kind = StepKind::Descend,
                 .fromRoot = first,
                 .left = false,
-                .value = current->right->value,
-                .message = std::to_string(value) + " > " + std::to_string(current->value)
-                    + " : descendre vers " + std::to_string(current->right->value) + "."});
-            current = current->right.get();
+                .value = current->right()->value(),
+                .message = std::to_string(value) + " > " + std::to_string(current->value())
+                    + " : descendre vers " + std::to_string(current->right()->value()) + "."});
+            current = current->right();
         } else {
             return;
         }
@@ -146,7 +146,7 @@ void TreeBuild::applyStep()
         }
         if (step.kind == StepKind::Descend) {
             _active = _cursor;
-            _cursor = step.left ? _cursor->left.get() : _cursor->right.get();
+            _cursor = step.left ? _cursor->left() : _cursor->right();
         } else {
             _active = _tree.addChild(*_cursor, step.left, step.value);
         }

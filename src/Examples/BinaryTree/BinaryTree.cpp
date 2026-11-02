@@ -67,7 +67,7 @@ void BinaryTree::addRoot(int value)
  */
 auto BinaryTree::addChild(TreeNode &parent, bool left, int value) -> TreeNode *
 {
-    auto &link = left ? parent.left : parent.right;
+    auto &link = left ? parent._left : parent._right;
     link = std::make_unique<TreeNode>(value);
     return link.get();
 }
@@ -86,18 +86,18 @@ void BinaryTree::insert(int value)
     // Parcours avec un pointeur brut. Seul le parent possède le nouveau nœud.
     TreeNode *current = _root.get();
     while (true) {
-        if (value < current->value) {
-            if (!current->left) {
-                current->left = std::make_unique<TreeNode>(value);
+        if (value < current->_value) {
+            if (!current->_left) {
+                current->_left = std::make_unique<TreeNode>(value);
                 return;
             }
-            current = current->left.get();
-        } else if (value > current->value) {
-            if (!current->right) {
-                current->right = std::make_unique<TreeNode>(value);
+            current = current->_left.get();
+        } else if (value > current->_value) {
+            if (!current->_right) {
+                current->_right = std::make_unique<TreeNode>(value);
                 return;
             }
-            current = current->right.get();
+            current = current->_right.get();
         } else {
             return;
         }
