@@ -27,7 +27,7 @@ namespace
 }
 
 /**
- * @brief Builds the tree-construction example with the menu font.
+ * @brief Builds the tree-construction example with the application font.
  * @param font Font used for the panel and the nodes.
  */
 TreeBuild::TreeBuild(const sf::Font &font) : Example(font) {}

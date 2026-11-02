@@ -23,7 +23,7 @@ namespace
 
 /**
  * @brief Stores the font used by the example texts.
- * @param font Font loaded by the menu. It must outlive the example.
+ * @param font Font loaded once for the application. It must outlive the example.
  */
 Example::Example(const sf::Font &font) : _font(font) {}
 

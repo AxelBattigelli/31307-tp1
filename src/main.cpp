@@ -14,6 +14,7 @@
 #include "Menu/Menu/Menu.hpp"
 #include "Menu/MenuItem/MenuItem.hpp"
 #include "Menu/MenuItemFactory/MenuItemFactory.hpp"
+#include "SystemFont/SystemFont.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/View.hpp>
@@ -33,7 +34,7 @@
 
 /**
  * @brief Starts the graphical application.
- * @return 0 when the window closes, 1 when the system font is missing.
+ * @return 0 when the window closes, 1 when assets/OpenSans.ttf is missing.
  */
 auto main() -> int
 {
@@ -44,16 +45,18 @@ auto main() -> int
     window.setVerticalSyncEnabled(true);
     window.setKeyRepeatEnabled(false);
 
-    Menu menu(std::make_unique<StandardMenuItemFactory>());
-    if (!menu.loadFont()) {
+    SystemFont systemFont;
+    if (!systemFont.load()) {
         return 1;
     }
 
+    Menu menu(std::make_unique<StandardMenuItemFactory>(), systemFont.font());
+
     std::vector<std::unique_ptr<Example>> examples;
-    examples.push_back(std::make_unique<QueueExample>(menu.font()));
-    examples.push_back(std::make_unique<StackExample>(menu.font()));
-    examples.push_back(std::make_unique<TreeBuild>(menu.font()));
-    examples.push_back(std::make_unique<TreeSearch>(menu.font()));
+    examples.push_back(std::make_unique<QueueExample>(systemFont.font()));
+    examples.push_back(std::make_unique<StackExample>(systemFont.font()));
+    examples.push_back(std::make_unique<TreeBuild>(systemFont.font()));
+    examples.push_back(std::make_unique<TreeSearch>(systemFont.font()));
 
     menu.resize(static_cast<float>(width), static_cast<float>(height));
     for (const auto &example : examples) {
@@ -103,7 +106,7 @@ auto main() -> int
         if (current != nullptr) {
             current->draw(window, area);
         } else {
-            drawPanel(window, area, menu.font(), "Examples", "",
+            drawPanel(window, area, systemFont.font(), "Examples", "",
                 "Two linked lists and two binary trees.", "Pick an example, then Auto or Manual.");
         }
         menu.draw(window);

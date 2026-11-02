@@ -24,7 +24,7 @@ class MenuItemFactory;
 
 class Menu {
   public:
-    explicit Menu(std::unique_ptr<MenuItemFactory> factory);
+    Menu(std::unique_ptr<MenuItemFactory> factory, sf::Font &font);
     ~Menu();
 
     Menu(const Menu &) = delete;
@@ -34,8 +34,6 @@ class Menu {
 
     using Action = std::function<void(const std::string &name, MenuItem::Mode mode)>;
 
-    auto loadFont() -> bool;
-    auto font() const -> const sf::Font &;
     void add(const std::string &name);
     void setAction(Action action);
     void resize(float windowWidth, float windowHeight);
@@ -47,12 +45,11 @@ class Menu {
 
     std::unique_ptr<MenuItemFactory> _factory;
     std::vector<std::unique_ptr<MenuItem>> _items;
-    sf::Font _font;
+    sf::Font &_font;
     sf::Text _title;
     sf::RectangleShape _background;
     sf::RectangleShape _separator;
     float _windowWidth = 0.F;
     float _windowHeight = 0.F;
-    bool _fontLoaded = false;
     Action _action;
 };

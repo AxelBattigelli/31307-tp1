@@ -28,7 +28,7 @@ namespace
 } // namespace
 
 /**
- * @brief Builds the search example with the menu font.
+ * @brief Builds the search example with the application font.
  * @param font Font used for the panel and the nodes.
  */
 TreeSearch::TreeSearch(const sf::Font &font) : Example(font) {}

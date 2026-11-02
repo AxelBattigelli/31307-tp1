@@ -51,7 +51,7 @@ namespace
 } // namespace
 
 /**
- * @brief Builds the queue example with the menu font.
+ * @brief Builds the queue example with the application font.
  * @param font Font used for the panel and the nodes.
  */
 QueueExample::QueueExample(const sf::Font &font) : Example(font) {}

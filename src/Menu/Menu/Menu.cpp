@@ -17,11 +17,8 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <algorithm>
-#include <cstdio>
-#include <iostream>
 #include <memory>
 #include <optional>
-#include <stdio.h>
 #include <string>
 #include <utility>
 
@@ -33,11 +30,15 @@
 /**
  * @brief Builds an empty menu that creates its rows through a factory.
  * @param factory Builds each row. The menu takes ownership of it.
+ * @param font Font shared by the whole application. It must outlive the menu.
  */
-Menu::Menu(std::unique_ptr<MenuItemFactory> factory) : _factory(std::move(factory))
+Menu::Menu(std::unique_ptr<MenuItemFactory> factory, sf::Font &font)
+    : _factory(std::move(factory)), _font(font)
 {
     _background.setFillColor(sf::Color(28, 34, 46));
     _separator.setFillColor(sf::Color(70, 82, 104));
+    _title.setFont(_font);
+    _title.setString("Menu");
     _title.setFillColor(sf::Color(230, 233, 240));
 }
 
@@ -47,51 +48,12 @@ Menu::Menu(std::unique_ptr<MenuItemFactory> factory) : _factory(std::move(factor
 Menu::~Menu() = default;
 
 /**
- * @brief Loads the system sans-serif font reported by fontconfig.
- * @return True when a font file was found and opened.
- */
-auto Menu::loadFont() -> bool
-{
-    std::string path;
-    FILE *pipe = popen("fc-match -f '%{file}' sans-serif", "r");
-    if (pipe != nullptr) {
-        char buffer[512];
-        while (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
-            path += buffer;
-        }
-        pclose(pipe);
-        while (!path.empty() && (path.back() == '\n' || path.back() == '\r')) {
-            path.pop_back();
-        }
-    }
-
-    if (!path.empty() && _font.loadFromFile(path)) {
-        _title.setFont(_font);
-        _title.setString("Menu");
-        _fontLoaded = true;
-        return true;
-    }
-
-    std::cerr << "Could not load the system font.\n";
-    return false;
-}
-
-/**
- * @brief Gives access to the font loaded for the menu.
- * @return The font. Valid after loadFont() succeeds.
- */
-auto Menu::font() const -> const sf::Font &
-{
-    return _font;
-}
-
-/**
  * @brief Appends a row built by the factory.
  * @param name Label shown on the left of the row.
  */
 void Menu::add(const std::string &name)
 {
-    if (!_fontLoaded || !_factory) {
+    if (!_factory) {
         return;
     }
 
@@ -165,10 +127,8 @@ void Menu::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
 void Menu::draw(sf::RenderTarget &target) const
 {
     target.draw(_background);
-    if (_fontLoaded) {
-        target.draw(_title);
-        target.draw(_separator);
-    }
+    target.draw(_title);
+    target.draw(_separator);
     for (const auto &item : _items) {
         item->draw(target);
     }
@@ -186,21 +146,19 @@ void Menu::layout()
     _background.setPosition(menuX, 0.F);
     _background.setSize({menuWidth, _windowHeight});
 
-    if (_fontLoaded) {
-        const unsigned titleSize = static_cast<unsigned>(std::max(16.F, _windowHeight * 0.035F));
-        _title.setCharacterSize(titleSize);
-        const sf::FloatRect titleBounds = _title.getLocalBounds();
-        _title.setOrigin(titleBounds.left, titleBounds.top);
-        _title.setPosition(menuX + padding, padding);
+    const unsigned titleSize = static_cast<unsigned>(std::max(16.F, _windowHeight * 0.035F));
+    _title.setCharacterSize(titleSize);
+    const sf::FloatRect titleBounds = _title.getLocalBounds();
+    _title.setOrigin(titleBounds.left, titleBounds.top);
+    _title.setPosition(menuX + padding, padding);
 
-        const float separatorY = padding + titleBounds.height + 12.F;
-        _separator.setPosition(menuX + padding, separatorY);
-        _separator.setSize({std::max(0.F, menuWidth - (2.F * padding)), 1.F});
-    }
+    const float separatorY = padding + titleBounds.height + 12.F;
+    _separator.setPosition(menuX + padding, separatorY);
+    _separator.setSize({std::max(0.F, menuWidth - (2.F * padding)), 1.F});
 
     const float rowHeight = std::clamp(_windowHeight * 0.08F, 40.F, 56.F);
     const float gap = 10.F;
-    const float firstRowY = _fontLoaded ? _separator.getPosition().y + 16.F : padding;
+    const float firstRowY = _separator.getPosition().y + 16.F;
 
     float y = firstRowY;
     for (const auto &item : _items) {
