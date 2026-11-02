@@ -1,0 +1,63 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  linux:
+    name: Ubuntu
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake g++ libsfml-dev
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: TP1-linux
+          path: build/TP1
+          retention-days: 10
+
+  windows:
+    name: Windows
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SFML
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri https://github.com/SFML/SFML/releases/download/2.6.2/SFML-2.6.2-windows-vc17-64-bit.zip -OutFile sfml.zip
+          Expand-Archive sfml.zip -DestinationPath sfml
+
+      - name: Configure
+        shell: pwsh
+        run: cmake -S . -B build -DSFML_DIR="$PWD/sfml/SFML-2.6.2/lib/cmake/SFML"
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Copy SFML libraries
+        shell: pwsh
+        run: |
+          Copy-Item sfml/SFML-2.6.2/bin/sfml-graphics-2.dll build/Release/
+          Copy-Item sfml/SFML-2.6.2/bin/sfml-window-2.dll build/Release/
+          Copy-Item sfml/SFML-2.6.2/bin/sfml-system-2.dll build/Release/
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: TP1-windows
+          path: |
+            build/Release/TP1.exe
+            build/Release/*.dll
+          retention-days: 10
